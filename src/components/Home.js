@@ -18,47 +18,62 @@ import Select from '@mui/material/Select';
 
 
 
-
 export default function MultiActionAreaCard() {
+    const url = "";
+    const [data, setData] = React.useState({
+        from:"",
+        to:"",
+        topic:""
+    });
+
+    //const [topic, setTopic] = React.useState('');
     const [value, setValue] = React.useState(new Date());
+    // const var1;
+   
+ console.log(value);
+    function handleChange(event) {
+        const newData = { ...data };
+        newData[event.target.name] = event.target.value;
+        //setData.target.name(event.target.value);
+        // setData(newData);
+        console.log(newData);
 
-    const [topic, setTopic] = React.useState('');
-
-    const handleChange = (event) => {
-      setTopic(event.target.value);
     };
 
     return (
         <Card sx={{ maxWidth: 600 }}>
+            <form>
             <CardActionArea>
-                <CardContent style={{display:"inline-flex",gridAutoFlow:"column",gridColumnGap:"2%"}}>
-                    
-                <Box sx={{ minWidth: 120 }}>
-      <FormControl fullWidth>
-        <InputLabel id="demo-simple-select-label">Topic</InputLabel>
-        <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          value={topic}
-          label="Topic"
-          onChange={handleChange}
-        >
-          <MenuItem value={10}>kafkaton</MenuItem>
-          <MenuItem value={20}>test</MenuItem>
-          <MenuItem value={30}>mourad</MenuItem>
-        </Select>
-      </FormControl>
-    </Box>
+                <CardContent style={{ display: "inline-flex", gridAutoFlow: "column", gridColumnGap: "2%" }}>
+
+                    <Box sx={{ minWidth: 120 }}>
+                        <FormControl fullWidth>
+                            <InputLabel id="demo-simple-select-label">Topic</InputLabel>
+                            <Select
+                                labelId="demo-simple-select-label"
+                                name="topic"
+                                value={data.topic}
+                                label="Topic"
+                                onChange={(event) => handleChange(event)}
+                            >
+                                <MenuItem value={"kafkaton"}>kafkaton</MenuItem>
+                                <MenuItem value={"test"}>test</MenuItem>
+                                <MenuItem value={"mourad"}>mourad</MenuItem>
+                            </Select>
+                        </FormControl>
+                    </Box>
 
 
                     <LocalizationProvider dateAdapter={AdapterDateFns}>
-                        <DateTimePicker 
+                        <DateTimePicker
                             renderInput={(props) => <TextField {...props} />}
                             label="From"
                             value={value}
+                            name="from"
                             onChange={(newValue) => {
                                 setValue(newValue);
-                            }}
+                                handleChange(newValue);
+                              }}
                         />
                     </LocalizationProvider>
                     <LocalizationProvider dateAdapter={AdapterDateFns}>
@@ -66,18 +81,21 @@ export default function MultiActionAreaCard() {
                             renderInput={(props) => <TextField {...props} />}
                             label="To"
                             value={value}
+                            name="to"
                             onChange={(newValue) => {
                                 setValue(newValue);
-                            }}
+                              }}
+                              
                         />
                     </LocalizationProvider>
                 </CardContent>
             </CardActionArea>
-            <CardActions style={{display:"flex",justifyContent:"center"}}>
+            <CardActions style={{ display: "flex", justifyContent: "center" }}>
                 <Button size="small" color="primary">
                     Submit
                 </Button>
             </CardActions>
+            </form>
         </Card>
     );
 }
